@@ -9,6 +9,8 @@ terraform {
 
 provider "docker" {}
 
+## Add container for Prometheus
+
 resource "docker_image" "prometheus" {
   name         = "prom/prometheus"
   keep_locally = false
@@ -22,6 +24,10 @@ resource "docker_container" "prometheus" {
     external = 9090
   } 
 }
+
+
+
+## Add container for Grafana
 
 resource "docker_image" "grafana"  {
 name = "grafana/grafana"
@@ -37,4 +43,18 @@ ports {
   } 
 }
 
+## Add container for Stardew Exporter? -HIGHLY EXPERIMENTAL-
 
+resource "docker_image" "stardew"  {
+name = "aleksandur24/stardewexporter:1.1"
+keep_locally = false
+}
+
+resource "docker_container" "stardew" {
+image = docker_image.stardew.image_id
+name = "stardew-test"
+ports {
+    internal = 9321
+    external = 9321
+  } 
+}
