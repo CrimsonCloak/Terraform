@@ -9,19 +9,18 @@ terraform {
 
 provider "docker" {}
 
-resource "docker_image" "nginx" {
-  name         = "nginx"
+resource "docker_image" "prometheus" {
+  name         = "prom/prometheus"
   keep_locally = false
 }
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.image_id
-  name  = var.container_name
-
- /* ports {
-    internal = 80
-    external = 8000
-  } */
+resource "docker_container" "prometheus" {
+  image = docker_image.prometheus.image_id
+  name  = "prometheus-test"
+  ports {
+    internal = 9090
+    external = 9090
+  } 
 }
 
 resource "docker_image" "grafana"  {
