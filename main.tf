@@ -23,3 +23,19 @@ resource "docker_container" "nginx" {
     external = 8000
   } */
 }
+
+resource "docker_image" "grafana"  {
+name = "grafana/grafana"
+keep_locally = false
+}
+
+resource "docker_container" "grafana" {
+image = docker_image.grafana.image_id
+name = "grafana-test"
+ports {
+    internal = 3000
+    external = 3000
+  } 
+}
+
+
