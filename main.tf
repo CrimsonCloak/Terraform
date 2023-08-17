@@ -11,6 +11,11 @@ provider "docker" {}
 
 ## Add container for Prometheus
 
+variable pwd {
+  default = "/home/tux/Desktop/Terraform_experimenting"
+}
+
+
 resource "docker_image" "prometheus" {
   name         = "prom/prometheus"
   keep_locally = false
@@ -24,7 +29,7 @@ resource "docker_container" "prometheus" {
     external = 9090
   } 
   volumes  {
-    host_path = "./prometheus"
+    host_path = "${var.pwd}/prometheus"
     container_path = "/etc/prometheus"
   }
 }
@@ -39,16 +44,16 @@ keep_locally = false
 }
 
 resource "docker_container" "grafana" {
-image = docker_image.grafana.image_id
-name = "grafana-test"
-ports {
+  image = docker_image.grafana.image_id
+  name = "grafana-test"
+  ports {
     internal = 3000
     external = 3000
   } 
-volumes {
-    host_path = "./grafana/grafana_data"
-    container_path = "/var/lib/grafana"
-}
+#  volumes {
+#    host_path = "${var.pwd}/grafana/grafana_data"
+#    container_path = "/var/lib/grafana"
+#}
 }
 
 ## Add container for Stardew Exporter? -HIGHLY EXPERIMENTAL-
@@ -67,7 +72,7 @@ ports {
   } 
   # Bind mounts
 volumes {
-    host_path = "./savefile"
+    host_path = "${var.pwd}/savefile"
     container_path = "/savefile"
 }
 }
