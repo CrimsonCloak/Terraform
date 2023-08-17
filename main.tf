@@ -24,7 +24,7 @@ resource "docker_container" "prometheus" {
     external = 9090
   } 
   volumes  {
-    host_path = "/prometheus"
+    host_path = "./prometheus"
     container_path = "/etc/prometheus"
   }
 }
