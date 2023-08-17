@@ -23,6 +23,10 @@ resource "docker_container" "prometheus" {
     internal = 9090
     external = 9090
   } 
+  volumes  {
+    host_path = "/prometheus"
+    container_path = "/etc/prometheus"
+  }
 }
 
 
@@ -41,6 +45,10 @@ ports {
     internal = 3000
     external = 3000
   } 
+volumes {
+    host_path = "./grafana/grafana_data"
+    container_path = "/var/lib/grafana"
+}
 }
 
 ## Add container for Stardew Exporter? -HIGHLY EXPERIMENTAL-
@@ -57,4 +65,23 @@ ports {
     internal = 9321
     external = 9321
   } 
+  # Bind mounts
+volumes {
+    host_path = "./savefile"
+    container_path = "/savefile"
 }
+}
+
+/*
+Prometheus:
+./prometheus/:/etc/prometheus/
+
+Stardewexporter:
+  - ./savefile:/savefile 
+  
+Grafana:
+      - ./grafana/grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+
+
+*/
