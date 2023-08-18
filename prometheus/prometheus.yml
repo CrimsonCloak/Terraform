@@ -9,6 +9,6 @@ scrape_configs:
 
   - job_name: 'stardew'
     static_configs:
-      - targets: ['http://stardew:9321']
+      - targets: ['10.0.0.4:9321']
 
 

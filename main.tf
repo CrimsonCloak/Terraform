@@ -17,6 +17,10 @@ variable pwd {
  # Make network
 resource "docker_network" "private_network" {
   name = "stardew"
+  ipam_config {
+    gateway = "10.0.0.1"
+    subnet = "10.0.0.0/24"
+  }
 }
 
 resource "docker_image" "prometheus" {
